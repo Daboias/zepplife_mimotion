@@ -11,20 +11,20 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout codes
-        uses: actions/checkout@v3
-      - name: Update system and install zsh
-        run: |
-          sudo -E apt-get -qq update
-          sudo -E apt-get install zsh -y
-          
+        uses: actions/checkout@v3  # 确认是否已经有更新的版本可用
+
       - name: 初始化Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3  # 确认是否已经有更新的版本可用
         with:
           python-version: 3.8
-          
+
+      - name: 安装依赖
+        run: |
+          pip3 install --upgrade pip
+          pip3 install requests pytz
+
       - name: 开始
         env:
-            CONFIG: ${{ secrets.CONFIG }}
+          CONFIG: ${{ secrets.CONFIG }}
         run: |
-          pip3 install requests pytz
           python3 main.py
